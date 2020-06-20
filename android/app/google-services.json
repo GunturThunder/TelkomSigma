@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1024785068571",
+    "firebase_url": "https://telkom-sigma.firebaseio.com",
+    "project_id": "telkom-sigma",
+    "storage_bucket": "telkom-sigma.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024785068571:android:2ec420f79bba22322d3ebe",
+        "android_client_info": {
+          "package_name": "com.telkomsigma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1024785068571-vt8nvl14alqpaplknjl72hcnen9g9r2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlrtniBHizUJK9cE5NBoLtUWncNRuXpYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024785068571-vt8nvl14alqpaplknjl72hcnen9g9r2a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

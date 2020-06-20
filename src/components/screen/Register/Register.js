@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons'
 import Logo from '../../img/logo.png'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

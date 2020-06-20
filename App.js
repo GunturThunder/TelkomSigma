@@ -4,6 +4,7 @@ import Login from './src/components/screen/Login/Login'
 import Register from './src/components/screen/Register/Register'
 import ForgotPassword from './src/components/screen/ForgotPassword/ForgetPassword'
 import Verification from './src/components/screen//ForgotPassword/Verification'
+import Home from './src/components/screen/Home/Home'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
@@ -36,7 +37,12 @@ const homeNavigator = createStackNavigator(
         headerShown: false
       }
     },
-
+    Home: {
+      screen: Home,
+      navigationOptions:{
+        headerShown: false
+      }
+    },
   }
 )
 
