@@ -34,5 +34,9 @@
     	<h4 class="title-demo">7. Download The Apk</h4>
       [`Download App`](https://firebasestorage.googleapis.com/v0/b/telkom-sigma.appspot.com/o/telkomsigma.apk?alt=media&token=51cf28e1-4813-408b-9fa9-8e0ca0fd101b)
     </div>
+	<div class="items">
+    	<h4 class="title-demo">8. Gif</h4>
+		<img class="img-demo" src="https://github.com/GunturThunder/TelkomSigma/blob/master/src/components/img/ezgif-6-46b26ca53f5b.gif">  
+    </div>
 </div>
 </section>
