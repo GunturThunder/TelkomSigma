@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, Image } from 'react-native'
+import Modal from 'react-native-modal'
 import PushNotification from "react-native-push-notification"
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getData } from '../../redux/action/data'
+import Logo from '../../img/logo.png'
+import { Button } from 'native-base';
+
 
 const styles = StyleSheet.create({
     wrap: {
@@ -21,8 +25,12 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
     icon: {
-        fontSize: 30,
-        color: '#2A2AC0'
+        fontSize: 20,
+        color: '#2A2AC0',
+        marginLeft: 10
+    },
+    textIcon: {
+        color: '#2A2AC0',
     },
     textData: {
         fontSize: 25,
@@ -35,7 +43,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: 'white',
         borderRadius: 10,
-        marginBottom:'3%'
+        marginBottom: '3%'
     },
     title: {
         fontWeight: 'bold',
@@ -48,7 +56,42 @@ const styles = StyleSheet.create({
     },
     number: {
         alignItems: 'center',
-        marginBottom:'1%'
+        marginBottom: '1%'
+    },
+    modal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        marginHorizontal: '10%',
+        marginVertical: '30%',
+        borderRadius: 10
+    },
+    textModal: {
+        fontSize: 15,
+        marginTop: 50
+    },
+    noBtn: {
+        marginHorizontal: '7%',
+        backgroundColor: '#2A2AC0',
+        marginTop: 20,
+        justifyContent: 'center',
+        borderRadius: 10
+    },
+    yesBtn: {
+        marginHorizontal: '7%',
+        backgroundColor: '#761D1D',
+        marginTop: 20,
+        justifyContent: 'center',
+        borderRadius: 10
+    },
+    btnText: {
+        color: 'white',
+        fontSize: 30,
+        fontWeight: 'bold'
+    },
+    wrapLogout: {
+        flexDirection: 'row'
     }
 })
 
@@ -57,6 +100,7 @@ class Home extends Component {
         super(props);
         this.state = {
             limit: 10,
+            isVisible: false
         }
         PushNotification.configure({
             permissions: {
@@ -89,6 +133,16 @@ class Home extends Component {
         })
         this.props.dispatch(getData(this.state.limit));
     }
+    handleModal = () => {
+        this.setState({
+            isVisible: true
+        })
+    }
+    handleNo = () => {
+        this.setState({
+            isVisible: false
+        })
+    }
     isLoadingFlatlist = () => {
         return (
             <View>
@@ -111,8 +165,9 @@ class Home extends Component {
             <View style={styles.wrap}>
                 <View style={styles.wrapContent}>
                     <View style={styles.wrapHeader}>
-                        <TouchableOpacity >
-                            <Icon style={styles.icon} name="ios-log-out" />
+                        <TouchableOpacity style={styles.wrapLogout} onPress={() => this.handleModal()}>
+                            <Text style={styles.textIcon}>Logout</Text>
+                            <Icon style={styles.icon} name="md-log-out" />
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.textData}>Post List</Text>
@@ -127,11 +182,20 @@ class Home extends Component {
                                 ListFooterComponent={this.isLoadingFlatlist}
                             />
                     }
-                    {/* <TouchableOpacity style={styles.card}>
-                        <View style={styles.number}><Text>Post id :</Text></View>
-                        <Text style={styles.title}>Title</Text>
-                        <Text>body</Text>
-                    </TouchableOpacity> */}
+                    <Modal isVisible={this.state.isVisible}>
+                        <View style={styles.modal}>
+                            <Image source={Logo} />
+                            <Text style={styles.textModal}>Are You Sure For To Logout</Text>
+                            <View style={{ width: '100%' }}>
+                                <Button onPress={() => this.handleNo()} style={styles.noBtn}>
+                                    <Text style={styles.btnText}>NO</Text>
+                                </Button>
+                                <Button onPress={() => this.props.navigation.navigate('Login')} style={styles.yesBtn}>
+                                    <Text style={styles.btnText}>YES</Text>
+                                </Button>
+                            </View>
+                        </View>
+                    </Modal>
                 </View>
             </View>
         )
