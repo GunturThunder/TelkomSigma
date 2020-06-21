@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { View, Text,StyleSheet } from 'react-native'
+import React, { Component, useEffect } from 'react';
+import SplashScreen from 'react-native-splash-screen'
+import { View, Text, StyleSheet } from 'react-native'
 import Login from './src/components/screen/Login/Login'
 import Register from './src/components/screen/Register/Register'
 import ForgotPassword from './src/components/screen/ForgotPassword/ForgetPassword'
@@ -12,8 +13,8 @@ import { Provider } from 'react-redux';
 import store from './src/components/redux/store';
 
 const styles = StyleSheet.create({
-  wrap : {
-      flex:1,
+  wrap: {
+    flex: 1,
   }
 })
 
@@ -21,7 +22,7 @@ const homeNavigator = createStackNavigator(
   {
     Login: {
       screen: Login,
-      navigationOptions:{
+      navigationOptions: {
         headerShown: false
       }
     },
@@ -30,19 +31,19 @@ const homeNavigator = createStackNavigator(
     },
     ForgotPassword: {
       screen: ForgotPassword,
-      navigationOptions:{
+      navigationOptions: {
         headerShown: false
       }
     },
     Verification: {
       screen: Verification,
-      navigationOptions:{
+      navigationOptions: {
         headerShown: false
       }
     },
     Home: {
       screen: Home,
-      navigationOptions:{
+      navigationOptions: {
         headerShown: false
       }
     },
@@ -50,16 +51,18 @@ const homeNavigator = createStackNavigator(
   }
 )
 
-const AppContainer =  createAppContainer(homeNavigator);
+const AppContainer = createAppContainer(homeNavigator);
 
-class App extends Component {
-  render(){
-    return(
-      <Provider store={store} style={styles.wrap}>
-        <AppContainer />
-      </Provider>
-    )
-  }
+function App() {
+  useEffect(() => {
+    SplashScreen.hide()
+  }, []);
+  console.disableYellowBox = true;
+  return (
+    <Provider store={store} style={styles.wrap}>
+      <AppContainer />
+    </Provider>
+  )
 }
 
 export default App

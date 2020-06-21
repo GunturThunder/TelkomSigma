@@ -115,7 +115,7 @@ class Home extends Component {
 
     componentDidMount() {
         this.getData()
-        // this.notifHandle()
+        this.notifHandle()
     }
     notifHandle() {
         PushNotification.localNotification({
