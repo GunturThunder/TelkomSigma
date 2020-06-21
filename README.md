@@ -32,7 +32,7 @@
     </div>
     <div class="items">
     	<h4 class="title-demo">7. Download The Apk</h4>
-      
+      [`Download App`](https://github.com/GunturThunder/Pont-Of-Sale-Appp-New.git)
     </div>
 </div>
 </section>
