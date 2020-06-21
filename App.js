@@ -5,8 +5,11 @@ import Register from './src/components/screen/Register/Register'
 import ForgotPassword from './src/components/screen/ForgotPassword/ForgetPassword'
 import Verification from './src/components/screen//ForgotPassword/Verification'
 import Home from './src/components/screen/Home/Home'
+import PostDetail from './src/components/screen/Home/PostDetail'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
+import { Provider } from 'react-redux';
+import store from './src/components/redux/store';
 
 const styles = StyleSheet.create({
   wrap : {
@@ -43,6 +46,7 @@ const homeNavigator = createStackNavigator(
         headerShown: false
       }
     },
+    PostDetail: PostDetail
   }
 )
 
@@ -51,9 +55,9 @@ const AppContainer =  createAppContainer(homeNavigator);
 class App extends Component {
   render(){
     return(
-      <View style={styles.wrap}>
+      <Provider store={store} style={styles.wrap}>
         <AppContainer />
-      </View>
+      </Provider>
     )
   }
 }

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
 import PushNotification from "react-native-push-notification"
 import Icon from 'react-native-vector-icons/Ionicons';
-import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { getData } from '../../redux/action/data'
 
 const styles = StyleSheet.create({
     wrap: {
@@ -15,36 +17,45 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     wrapHeader: {
-        flexDirection:'row',
-        justifyContent:'space-between'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     icon: {
         fontSize: 30,
         color: '#2A2AC0'
     },
     textData: {
-        fontSize:25,
-        marginTop:20,
-        fontWeight:'bold',
-        color:'#5A5A5A',
-        marginBottom:20
+        fontSize: 25,
+        marginTop: 20,
+        fontWeight: 'bold',
+        color: '#5A5A5A',
+        marginBottom: 20
     },
     card: {
-        borderTopWidth:1,
-        borderBottomWidth:1,
-        borderTopColor:'#DBDBDB',
-        borderBottomColor:'#DBDBDB',
-        padding:10
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderTopColor: '#DBDBDB',
+        borderBottomColor: '#DBDBDB',
+        padding: 10
     },
     title: {
-        fontWeight:'bold',
-        marginBottom:10
+        fontWeight: 'bold',
+        marginBottom: 10
+    },
+    isLoading: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 
 class Home extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            limit: 10,
+            isLoading: ''
+        }
         PushNotification.configure({
             permissions: {
                 alert: true,
@@ -56,13 +67,43 @@ class Home extends Component {
         });
     }
 
-    // componentDidMount=()=>{
-    //     PushNotification.localNotification({
-    //         title: "Telkom Sigma",
-    //         message: "Welcome Back To The App",
-    //       });
-    // }
+    componentDidMount() {
+        this.getData()
+        // this.notifHandle()
+    }
+    notifHandle() {
+        PushNotification.localNotification({
+            title: "Telkom Sigma",
+            message: "Welcome Back To The App",
+        });
+    }
+
+    getData() {
+        this.props.dispatch(getData());
+    }
+    handlePage = () => {
+        this.setState({
+            limit: this.state.limit + 10
+        })
+        this.props.dispatch(getData(this.state.limit));
+    }
+    isLoadingFlatlist = () => {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        )
+    }
+    renderRow = ({ item }) => {
+        return (
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('PostDetail', { data: item.id })} style={styles.card}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text>{item.body}</Text>
+            </TouchableOpacity>
+        )
+    }
     render() {
+        const { datas, isLoading } = this.props
         return (
             <View style={styles.wrap}>
                 <View style={styles.wrapContent}>
@@ -75,16 +116,28 @@ class Home extends Component {
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.textData}>Data</Text>
-                    <ScrollView>
-                        <View style={styles.card}>
-                            <Text style={styles.title}>sunt aut facere repellat provident occaecati excepturi optio reprehenderit</Text>
-                            <Text>quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto</Text>
-                        </View>
-                    </ScrollView>
+                    {
+                        isLoading ? <View style={styles.isLoading}><ActivityIndicator size="large" color="#0000ff" /></View> :
+                            <FlatList
+                                data={datas}
+                                renderItem={this.renderRow}
+                                keyExtractor={(item) => item.id.toString()}
+                                onEndReached={this.handlePage}
+                                onEndReachedThreshold={0.1}
+                                ListFooterComponent={this.isLoadingFlatlist}
+                            />
+                    }
                 </View>
             </View>
         )
     }
 }
 
-export default Home
+const mapStateToProps = (state) => {
+    return {
+        datas: state.data.data.data,
+        isLoading: state.data.isLoading
+    }
+}
+
+export default connect(mapStateToProps)(Home)
