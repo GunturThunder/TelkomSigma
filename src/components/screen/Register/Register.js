@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Image, TextInput,ToastAndroid } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Logo from '../../img/logo.png'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -69,6 +69,10 @@ const styles = StyleSheet.create({
 })
 
 class Register extends Component {
+    handleSend = ()=>{
+        this.props.navigation.navigate('Login')
+        ToastAndroid.show("You Have Been Registed", ToastAndroid.SHORT);
+    }
     render() {
         return (
             <View style={styles.wrap}>
@@ -94,7 +98,7 @@ class Register extends Component {
                         <Icon style={styles.icon} name="md-locate" />
                         <TextInput style={styles.inputText} placeholder='Address' />
                     </View>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity onPress={()=>this.handleSend()} style={styles.button}>
                         <Text style={styles.btnText}>Register</Text>
                     </TouchableOpacity>
                 </View>

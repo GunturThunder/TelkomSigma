@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
     wrapHeader: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'flex-end'
     },
     icon: {
         fontSize: 30,
@@ -32,11 +32,10 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     card: {
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        borderTopColor: '#DBDBDB',
-        borderBottomColor: '#DBDBDB',
-        padding: 10
+        padding: 10,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        marginBottom:'3%'
     },
     title: {
         fontWeight: 'bold',
@@ -46,6 +45,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    number: {
+        alignItems: 'center',
+        marginBottom:'1%'
     }
 })
 
@@ -54,7 +57,6 @@ class Home extends Component {
         super(props);
         this.state = {
             limit: 10,
-            isLoading: ''
         }
         PushNotification.configure({
             permissions: {
@@ -97,6 +99,7 @@ class Home extends Component {
     renderRow = ({ item }) => {
         return (
             <TouchableOpacity onPress={() => this.props.navigation.navigate('PostDetail', { data: item.id })} style={styles.card}>
+                <View style={styles.number}><Text>Post id : {item.id}</Text></View>
                 <Text style={styles.title}>{item.title}</Text>
                 <Text>{item.body}</Text>
             </TouchableOpacity>
@@ -108,14 +111,11 @@ class Home extends Component {
             <View style={styles.wrap}>
                 <View style={styles.wrapContent}>
                     <View style={styles.wrapHeader}>
-                        <TouchableOpacity>
-                            <Icon style={styles.icon} name="md-arrow-back" />
-                        </TouchableOpacity>
                         <TouchableOpacity >
-                            <Icon style={styles.icon} name="md-person" />
+                            <Icon style={styles.icon} name="ios-log-out" />
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.textData}>Data</Text>
+                    <Text style={styles.textData}>Post List</Text>
                     {
                         isLoading ? <View style={styles.isLoading}><ActivityIndicator size="large" color="#0000ff" /></View> :
                             <FlatList
@@ -127,6 +127,11 @@ class Home extends Component {
                                 ListFooterComponent={this.isLoadingFlatlist}
                             />
                     }
+                    {/* <TouchableOpacity style={styles.card}>
+                        <View style={styles.number}><Text>Post id :</Text></View>
+                        <Text style={styles.title}>Title</Text>
+                        <Text>body</Text>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         )

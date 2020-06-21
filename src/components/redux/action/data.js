@@ -20,3 +20,13 @@ export const getData = (limit) => {
         }   
     }
 }
+
+export const postDetail = (id) => {
+    return {
+        type: 'GET_DETAIL',
+        payload: axios({
+            method: "GET",
+            url: `https://jsonplaceholder.typicode.com/comments?postId=${id}`,
+        })
+    }
+}

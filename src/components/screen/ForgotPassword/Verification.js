@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Image, TextInput,ToastAndroid } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import Logo from '../../img/logo.png'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -78,6 +78,10 @@ const styles = StyleSheet.create({
 })
 
 class Verification extends Component {
+    handleSend = ()=>{
+        this.props.navigation.navigate('Login')
+        ToastAndroid.show("Verification Accepted", ToastAndroid.SHORT);
+    }
     render() {
         return (
             <View style={styles.wrap}>
@@ -92,7 +96,7 @@ class Verification extends Component {
                         <Icon style={styles.icon} name="md-key" />
                         <TextInput keyboardType="numeric" secureTextEntry={true} style={styles.inputText} placeholder='Code Verification' />
                     </View>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity onPress={()=>this.handleSend()} style={styles.button}>
                         <Text style={styles.btnText}>Send</Text>
                     </TouchableOpacity>
                 </View>
